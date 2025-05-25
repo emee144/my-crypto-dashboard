@@ -1,18 +1,22 @@
-export default {
+'use strict';
+
+module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.addColumn('users', 'ethAddress', {
+    await queryInterface.addColumn('assets', 'assetType', {
       type: Sequelize.STRING,
-      allowNull: true, // Set to true if it's optional for the user to have an address
+      allowNull: false,
+      defaultValue: 'exchange', // optional: helps prevent issues on existing rows
     });
-    await queryInterface.addColumn('users', 'tronAddress', {
+
+    await queryInterface.addColumn('assets', 'assetName', {
       type: Sequelize.STRING,
-      allowNull: true,
+      allowNull: false,
+      defaultValue: 'usdt', // optional: change to a real value you expect
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    // Remove ethAddress and tronAddress columns if the migration is rolled back
-    await queryInterface.removeColumn('users', 'ethAddress');
-    await queryInterface.removeColumn('users', 'tronAddress');
+    await queryInterface.removeColumn('assets', 'assetName');
+    await queryInterface.removeColumn('assets', 'assetType');
   }
 };

@@ -107,7 +107,8 @@ const Assets = sequelize.define('Assets', { // Updated model name to 'Assets'
     allowNull: false,
   },
 });
-Assets.belongsTo(User, { foreignKey: 'userId' }); // Define association
+Assets.belongsTo(User, { foreignKey: 'userId', as: 'user' }); // Define association
+
 const Deposit = sequelize.define('Deposit', { // Updated model name to 'Deposit'
   id: {
     type: DataTypes.UUID,
@@ -358,5 +359,37 @@ const WithdrawalHistory = sequelize.define('WithdrawalHistory', {
   timestamps: true,
 });
 WithdrawalHistory.belongsTo(User, { foreignKey: 'userId', as: 'user' });
-export { sequelize, User, Assets, Model, WithdrawalPassword, WithdrawalHistory, DepositHistory, WithdrawalAddress, WithdrawalRequest, connectDB };
 
+const TransferHistory = sequelize.define('TransferHistory', {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  assetType: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  from: {
+    type: DataTypes.ENUM('exchange', 'trade', 'perpetual'),
+    allowNull: false,
+  },
+  to: {
+    type: DataTypes.ENUM('exchange', 'trade', 'perpetual'),
+    allowNull: false,
+  },
+  amount: {
+    type: DataTypes.DECIMAL(18, 8), // Better precision for crypto
+    allowNull: false,
+  },
+}, {
+  modelName: 'TransferHistory',
+  tableName: 'transferhistories',
+  timestamps: true,
+});
+TransferHistory.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+export { sequelize, User, Assets, Model, WithdrawalPassword, WithdrawalHistory, DepositHistory, TransferHistory, WithdrawalAddress, WithdrawalRequest, connectDB };

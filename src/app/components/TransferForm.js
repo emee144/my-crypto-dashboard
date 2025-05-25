@@ -69,13 +69,13 @@ export default function TransferForm() {
   const handleTransfer = async () => {
     setErrorMessage('');
     setLoading(true);
-
+  
     if (from === to) {
       setErrorMessage('Source and destination must be different');
       setLoading(false);
       return;
     }
-
+  
     try {
       const res = await fetch('/api/auth/transfer', {
         method: 'POST',
@@ -84,18 +84,23 @@ export default function TransferForm() {
         },
         credentials: 'include',
         body: JSON.stringify({
-          assetType: from,
+          balanceTypeFrom: from,
+          balanceTypeTo: to,
           amount,
-          receiverId: to,
-          crypto: assetType, // Pass crypto too, if backend supports it
+          assetType,
         }),
       });
-
+  
       const data = await res.json();
-
+  
       if (res.ok) {
         alert('Transfer successful!');
         setAmount('');
+        setBalances((prev) => ({
+          ...prev,
+          [from]: prev[from] - parseFloat(amount),
+          [to]: prev[to] + parseFloat(amount),
+        }));
       } else {
         setErrorMessage(data.message || 'Transfer failed');
       }
@@ -106,7 +111,9 @@ export default function TransferForm() {
       setLoading(false);
     }
   };
-
+  
+  
+  
   return (
     <div className="max-w-sm w-full bg-[#1e1e2f] text-white p-6 rounded-lg shadow-lg space-y-6">
       <h2 className="text-xl font-semibold text-center">Transfer</h2>

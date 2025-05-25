@@ -1,44 +1,52 @@
-import sequelize from '@/app/lib/sequelize';
+import { Model, DataTypes } from 'sequelize';
 
-import UserFactory from './user.js';
-import WithdrawalHistoryFactory from './withdrawalhistory.js';
-import AssetsFactory from './assets.js';
-import WithdrawalPasswordFactory from './withdrawalpassword.js';
-import DepositHistoryFactory from './deposithistory.js';
-import WithdrawalAddressFactory from './withdrawaladdress.js';
-import WithdrawalRequestFactory from './withdrawalrequest.js';
-
-let initialized = false;
-let models;
-
-export function initModels() {
-  if (!initialized) {
-    const User = UserFactory(sequelize);
-    const WithdrawalHistory = WithdrawalHistoryFactory(sequelize);
-    const Assets = AssetsFactory(sequelize);
-    const WithdrawalPassword = WithdrawalPasswordFactory(sequelize);
-    const DepositHistory = DepositHistoryFactory(sequelize);
-    const WithdrawalAddress = WithdrawalAddressFactory(sequelize);
-    const WithdrawalRequest = WithdrawalRequestFactory(sequelize);
-
-    models = {
-      User,
-      WithdrawalHistory,
-      Assets,
-      WithdrawalPassword,
-      DepositHistory,
-      WithdrawalAddress,
-      WithdrawalRequest,
-    };
-
-    Object.values(models).forEach((model) => {
-      if (typeof model.associate === 'function') {
-        model.associate(models);
-      }
-    });
-
-    initialized = true;
+export default (sequelize) => {
+  class WithdrawalHistory extends Model {
+    static associate(models) {
+      WithdrawalHistory.belongsTo(models.User, {
+        foreignKey: 'userId',
+        as: 'user',
+      });
+    }
   }
 
-  return models;
-}
+  WithdrawalHistory.init({
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+    userId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    currency: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    amountAfterFee: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false,
+    },
+    chainName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    withdrawalAddress: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    status: {
+        type: DataTypes.ENUM('pending', 'paid', 'rejected'), // Updated ENUM values
+        allowNull: false,
+        defaultValue: 'pending', // Default value set to 'pending'
+      },
+  }, {
+    sequelize,
+    modelName: 'WithdrawalHistory',
+    tableName: 'withdrawalhistories',
+    timestamps: true,
+  });
+
+  return WithdrawalHistory;
+};

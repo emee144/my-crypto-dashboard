@@ -19,8 +19,8 @@ export const metadata = {
   description: 'Crypto trading platform',
 };
 
-export default function RootLayout({ children }) {
-  const cookieStore = cookies();
+export default async function RootLayout({ children }) {
+  const cookieStore = await cookies();
   const token = cookieStore.get('token')?.value;
   const isLoggedIn = !!token;
   return (

@@ -1,5 +1,5 @@
 // src/app/lib/assetsUtils.js
-import {Assets}  from './models/assets'; // Adjust the import path if necessary
+import {Assets}  from './models/assets.js'; // Adjust the import path if necessary
 
 export async function getExchangeBalanceByUserId(userId) {
   try {
