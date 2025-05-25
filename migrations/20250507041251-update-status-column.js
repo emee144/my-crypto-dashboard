@@ -1,7 +1,7 @@
 export default {
   async up(queryInterface, Sequelize) {
     await queryInterface.changeColumn('withdrawalhistories', 'status', {
-      type: Sequelize.ENUM('pending', 'approved', 'rejected'),
+      type: Sequelize.ENUM('pending', 'paid', 'rejected'),
       allowNull: false,
       defaultValue: 'pending', // default value
     });

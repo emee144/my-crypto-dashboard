@@ -13,7 +13,7 @@ export async function POST(req) {
   await connectDB();
 
   try {
-    const { email, password } = await req.json();
+    const { email, password, rememberMe } = await req.json();
     const normalizedEmail = email.toLowerCase();
 
     const user = await authenticateUser(normalizedEmail, password);
@@ -32,7 +32,7 @@ export async function POST(req) {
     );
 
     // ✅ Await saving token into cookies
-    await saveTokenToCookies(token); 
+    await saveTokenToCookies(token, rememberMe); 
 
     return NextResponse.json({
       message: 'Login successful',

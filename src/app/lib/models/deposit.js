@@ -2,7 +2,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '@/app/lib/sequelize';  // Import your sequelize instance
 
-const Deposit = sequelize.define('deposits', {
+const Deposit = sequelize.define('deposit', {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,

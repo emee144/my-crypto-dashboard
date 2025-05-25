@@ -6,33 +6,29 @@ import {
   WithdrawalPassword,
   WithdrawalHistory,
   DepositHistory,
+  TransferHistory,
   WithdrawalAddress,
   WithdrawalRequest,
 } from '@/lib/sequelize.js';
 
-let initialized = false;
-let models;
-
 export function initModels() {
-  if (!initialized) {
-    models = {
-      User,
-      Assets,
-      WithdrawalPassword,
-      WithdrawalHistory,
-      DepositHistory,
-      WithdrawalAddress,
-      WithdrawalRequest,
-    };
+  const models = {
+    User,
+    Assets,
+    WithdrawalPassword,
+    WithdrawalHistory,
+    DepositHistory,
+    TransferHistory,
+    WithdrawalAddress,
+    WithdrawalRequest,
+  };
 
-    Object.values(models).forEach((model) => {
-      if (typeof model.associate === 'function') {
-        model.associate(models); // ✅ run only once
-      }
-    });
-
-    initialized = true;
-  }
+  // Call each model's associate method once, if it exists
+  Object.values(models).forEach((model) => {
+    if (typeof model.associate === 'function') {
+      model.associate(models);
+    }
+  });
 
   return models;
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowDownCircle, ArrowUpCircle } from "lucide-react";
+import { ArrowDownCircle, ArrowUpCircle, Repeat } from "lucide-react";
 
 const TransactionHistory = () => {
   const [transactionHistory, setTransactionHistory] = useState([]);
@@ -9,17 +9,19 @@ const TransactionHistory = () => {
   useEffect(() => {
     const fetchTransactionHistory = async () => {
       try {
-        const [depositRes, withdrawalRes] = await Promise.all([
+        const [depositRes, withdrawalRes, transferRes] = await Promise.all([
           fetch("/api/auth/deposit/history"),
           fetch("/api/auth/withdrawalhistory"),
+          fetch("/api/auth/transferhistory"),
         ]);
 
-        if (!depositRes.ok || !withdrawalRes.ok) {
+        if (!depositRes.ok || !withdrawalRes.ok || !transferRes.ok) {
           throw new Error("Failed to fetch one or more transaction types");
         }
 
         const depositData = await depositRes.json();
         const withdrawalData = await withdrawalRes.json();
+        const transferData = await transferRes.json();
 
         const deposits = Array.isArray(depositData.deposits)
           ? depositData.deposits.map((item) => ({
@@ -37,7 +39,15 @@ const TransactionHistory = () => {
             }))
           : [];
 
-        const merged = [...deposits, ...withdrawals].sort(
+        const transfers = Array.isArray(transferData)
+          ? transferData.map((item) => ({
+              ...item,
+              type: "Transfer",
+              amount: item.amount,
+            }))
+          : [];
+
+        const merged = [...deposits, ...withdrawals, ...transfers].sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
 
@@ -70,10 +80,31 @@ const TransactionHistory = () => {
           <AnimatePresence>
             {transactionHistory.map((tx, index) => {
               const isDeposit = tx.type === "Deposit";
-              const Icon = isDeposit ? ArrowDownCircle : ArrowUpCircle;
+              const isWithdrawal = tx.type === "Withdrawal";
+              const isTransfer = tx.type === "Transfer";
 
-              const bgClass = isDeposit ? "bg-blue-600" : "bg-green-600";
-              const borderClass = isDeposit ? "border-blue-400" : "border-green-400";
+              let Icon;
+              if (isDeposit) Icon = ArrowDownCircle;
+              else if (isWithdrawal) Icon = ArrowUpCircle;
+              else if (isTransfer) Icon = Repeat;
+              else Icon = ArrowUpCircle; // fallback
+
+              const bgClass = isDeposit
+                ? "bg-blue-600"
+                : isWithdrawal
+                ? "bg-green-600"
+                : isTransfer
+                ? "bg-red-600"
+                : "bg-gray-600";
+
+              const borderClass = isDeposit
+                ? "border-blue-400"
+                : isWithdrawal
+                ? "border-green-400"
+                : isTransfer
+                ? "border-red-400"
+                : "border-gray-400";
+
               const textClass = "text-white";
 
               return (
@@ -93,6 +124,15 @@ const TransactionHistory = () => {
                   <p>
                     <strong>Amount:</strong> {formatAmount(tx.amount)}
                   </p>
+
+                  {isTransfer && (
+                    <p className="flex items-center gap-1">
+                      <strong>{tx.from}</strong>
+                      <Repeat className={`w-4 h-4 mx-1 ${textClass}`} />
+                      <strong>{tx.to}</strong>
+                    </p>
+                  )}
+
                   {tx.currency && (
                     <p>
                       <strong>Currency:</strong> {tx.currency}

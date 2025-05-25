@@ -42,6 +42,7 @@ export default (sequelize) => {
         defaultValue: 0.0, // Default value for trade
         allowNull: false,
       },
+      
       assetType: {
         type: DataTypes.STRING, // Define assetType column here
         allowNull: false, // Set as required (or true if optional)
