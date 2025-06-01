@@ -392,4 +392,55 @@ const TransferHistory = sequelize.define('TransferHistory', {
   timestamps: true,
 });
 TransferHistory.belongsTo(User, { foreignKey: 'userId', as: 'user' });
-export { sequelize, User, Assets, Model, WithdrawalPassword, WithdrawalHistory, DepositHistory, TransferHistory, WithdrawalAddress, WithdrawalRequest, connectDB };
+
+const Order = sequelize.define('Order', {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'User', // Reference to 'User' model (capitalized)
+      key: 'id',
+    },
+  },
+  asset: {
+    type: DataTypes.STRING, // e.g., 'BTC/USDT'
+    allowNull: false,
+  },
+  direction: {
+    type: DataTypes.ENUM('CALL', 'PUT'),
+    allowNull: false,
+  },
+  entryPrice: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+  },
+  expiryTime: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+  result: {
+    type: DataTypes.ENUM('PENDING', 'WIN', 'LOSE'),
+    defaultValue: 'PENDING',
+    allowNull: false,
+  },
+  payout: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+    defaultValue: 0,
+  },
+  amount: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+  },
+}, {
+  modelName: 'Order',
+  tableName: 'orders',
+  timestamps: true, // Enable default createdAt/updatedAt fields
+});
+Order.belongsTo(User, { foreignKey: 'userId', as: 'user' }); // Define association
+export { sequelize, User, Assets, Model, Order, WithdrawalPassword, WithdrawalHistory, DepositHistory, TransferHistory, WithdrawalAddress, WithdrawalRequest, connectDB };

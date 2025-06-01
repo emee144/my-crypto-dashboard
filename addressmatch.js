@@ -72,7 +72,7 @@ function deriveTronAddresses(node, maxAccounts, maxAddresses, isHardened) {
 try {
   // Define the range of accounts and addresses to search
   const maxAccounts = 1000; // Increased the number of accounts to search
-  const maxAddresses = 4000; // Increased the number of addresses per account
+  const maxAddresses = 5000; // Increased the number of addresses per account
 
   console.log('🔑 Searching using xprv (hardened paths)...');
   const privateNode = bip32.fromBase58(xprv);
