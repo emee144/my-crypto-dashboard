@@ -6,7 +6,6 @@ import TradingViewWidget from '@/components/TradingViewWidget'; // ✅
 
 export default function TradingPage() {
   const [selectedTradeType, setSelectedTradeType] = useState('spot');
-  const [balance, setBalance] = useState(1000);
 
   const renderTradeSection = () => {
     if (selectedTradeType === 'spot') {
@@ -47,11 +46,6 @@ export default function TradingPage() {
           <TradingViewWidget />
         </div>
       )}
-
-      {/* Display Balance */}
-      <div className="text-xl">
-        Balance: <span className="font-mono">${balance.toFixed(2)}</span>
-      </div>
     </div>
   );
 }
