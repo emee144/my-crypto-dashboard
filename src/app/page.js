@@ -236,6 +236,12 @@ const HomePage = () => {
                       Remember Me
                       </label>
                     </div>
+                        {/* 👉 Forgot Password link */}
+    <div className="mb-4 text-right">
+      <a href="/forgot-password" className="text-sm text-blue-600 hover:underline">
+        Forgot Password?
+      </a>
+    </div>
                     {error && <p style={{ color: "red" }}>{error}</p>}
                     <button
                       type="submit"

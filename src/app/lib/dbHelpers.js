@@ -10,5 +10,5 @@ export async function getUserTotalBalance(userId) {
   const perpetual = parseFloat(assets.perpetual) || 0;
 
   const total = exchange + trade + perpetual;
-  return total.toFixed(2); // ensures it returns a string like "4500.00"
+  return parseFloat(total.toFixed(2));
 }

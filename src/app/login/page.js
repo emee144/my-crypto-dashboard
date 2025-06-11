@@ -116,7 +116,12 @@ const LoginPage = () => {
               Remember Me
             </label>
           </div>
-
+             {/* 👉 Forgot Password link */}
+    <div className="mb-4 text-right">
+      <a href="/forgotpassword" className="text-sm text-blue-600 hover:underline">
+        Forgot Password?
+      </a>
+    </div>
           <button
             type="submit"
             className="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition"

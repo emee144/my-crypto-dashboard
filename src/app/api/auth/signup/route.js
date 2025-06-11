@@ -21,11 +21,15 @@ const signupSchema = z.object({
 });
 
 function getWalletIndexFromUUID(uuid) {
-  const hash = crypto.createHash('sha256').update(uuid).digest('hex');
-  return parseInt(hash.slice(0, 8), 16); // First 8 chars → number
+  const hash = crypto.createHash('sha256').update(uuid).digest();
+  // Convert first 4 bytes to a 32-bit unsigned integer and take a safe modulo
+  const index = hash.readUInt32BE(0) % 1000000; // Max 999,999
+  return index;
 }
 
+
 async function generateWallets(index = 0) {
+  console.log("Master key:", MASTER_PRIVATE_KEY);
   const root = HDKey.fromExtendedKey(MASTER_PRIVATE_KEY);
 
   // === Ethereum ===
