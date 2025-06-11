@@ -229,9 +229,10 @@ export default function WithdrawPage() {
 
             <div className="flex justify-between">
               <span>You Will Receive</span>
-              <span>
-            {((parseFloat(amount || 0) * handlingFeePercent) / 100).toFixed(4)} {currency.toUpperCase()}
-            </span>
+             <span>
+  {(parseFloat(amount || 0) - (parseFloat(amount || 0) * handlingFeePercent / 100)).toFixed(4)} {currency.toUpperCase()}
+</span>
+
 
             </div>
 
