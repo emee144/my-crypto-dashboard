@@ -1,5 +1,7 @@
 "use client";
+
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   LayoutDashboard,
@@ -8,10 +10,26 @@ import {
   Settings,
   TrendingUp,
   Menu,
+  LogOut,
 } from "lucide-react";
 
-export default function Navbar({ isLoggedIn }) {
+export default function Navbar({ initialIsLoggedIn }) {
+  const [isLoggedIn, setIsLoggedIn] = useState(initialIsLoggedIn);
   const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      const res = await fetch("/api/auth/logout", { method: "POST" });
+      if (res.ok) {
+        router.push("/"); // Redirect to home/login
+      } else {
+        console.error("Logout failed");
+      }
+    } catch (err) {
+      console.error("Logout error:", err);
+    }
+  };
 
   const cardStyle =
     "flex items-center space-x-2 bg-white text-blue-900 font-semibold px-4 py-2 rounded-xl shadow hover:shadow-lg transition-all";
@@ -25,11 +43,7 @@ export default function Navbar({ isLoggedIn }) {
     { href: "/assets", label: "Assets", icon: <Wallet size={18} /> },
     { href: "/transactions", label: "Transactions", icon: <Receipt size={18} /> },
     { href: "/settings", label: "Settings", icon: <Settings size={18} /> },
-    {
-      href: "/trade",
-      label: "Trade",
-      icon: <TrendingUp size={18} />,
-    },
+    { href: "/trade", label: "Trade", icon: <TrendingUp size={18} /> },
   ];
 
   return (
@@ -40,7 +54,7 @@ export default function Navbar({ isLoggedIn }) {
         </div>
 
         {/* Desktop Menu */}
-        <ul className="hidden sm:flex space-x-4">
+        <ul className="hidden sm:flex space-x-4 items-center">
           {menuItems.map(({ href, label, icon }) => (
             <li key={label}>
               <Link href={href} className={cardStyle}>
@@ -49,6 +63,14 @@ export default function Navbar({ isLoggedIn }) {
               </Link>
             </li>
           ))}
+          {isLoggedIn && (
+            <li>
+              <button onClick={handleLogout} className={cardStyle}>
+                <LogOut size={18} />
+                <span>Logout</span>
+              </button>
+            </li>
+          )}
         </ul>
 
         {/* Hamburger Button */}
@@ -75,6 +97,20 @@ export default function Navbar({ isLoggedIn }) {
               </Link>
             </li>
           ))}
+          {isLoggedIn && (
+            <li className="flex-shrink-0">
+              <button
+                onClick={() => {
+                  setMenuOpen(false);
+                  handleLogout();
+                }}
+                className={cardStyle}
+              >
+                <LogOut size={18} />
+                <span>Logout</span>
+              </button>
+            </li>
+          )}
         </ul>
       )}
     </nav>
