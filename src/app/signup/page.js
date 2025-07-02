@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { z } from 'zod'
+import toast from "react-hot-toast";
 
 const SignupPage = () => {
   const [email, setEmail] = useState('')
@@ -76,7 +77,7 @@ const SignupPage = () => {
       const data = await response.json()
 
       if (response.ok) {
-        setSuccessMessage('Sign-up successful! Redirecting...')
+        toast.success("Sign-up successful! Redirecting...");
         localStorage.removeItem('uplineReferralCode') // ✅ Clear referral code
 
         // Set the Ethereum and TRON addresses from the response

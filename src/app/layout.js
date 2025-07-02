@@ -1,10 +1,10 @@
-// layout.js (Server Component – no 'use client')
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import { cookies } from 'next/headers';
 import { Toaster } from "react-hot-toast"
+import { AuthProvider } from './context/AuthContext';
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
@@ -30,9 +30,11 @@ console.log("🧠 layout.js – isLoggedIn:", isLoggedIn);
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="min-h-screen flex flex-col">
-        <Navbar initialIsLoggedIn={isLoggedIn} />
+        <AuthProvider initialIsLoggedIn={isLoggedIn}>
+        <Navbar />
         <main className='flex-grow'>{children}</main>
         <Footer /> {/* Let Footer handle its own logic */}
+        </AuthProvider>
         <Toaster position="top-center" reverseOrder={false} />
       </body>
     </html>
