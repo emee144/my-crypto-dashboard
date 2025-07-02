@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useAuth } from "@/app/context/AuthContext"; // Import AuthContext
 import {
   LayoutDashboard,
   Wallet,
@@ -13,8 +14,8 @@ import {
   LogOut,
 } from "lucide-react";
 
-export default function Navbar({ initialIsLoggedIn }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(initialIsLoggedIn);
+export default function Navbar() {
+  const { isLoggedIn } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
 
@@ -104,7 +105,7 @@ export default function Navbar({ initialIsLoggedIn }) {
                   setMenuOpen(false);
                   handleLogout();
                 }}
-                className={cardStyle}
+                 className={`${cardStyle} bg-red-500`} style={{ cursor: 'pointer' }}
               >
                 <LogOut size={18} />
                 <span>Logout</span>

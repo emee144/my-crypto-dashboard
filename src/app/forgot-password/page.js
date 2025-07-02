@@ -12,28 +12,30 @@ export default function ForgotPasswordPage() {
     setLoading(true);
     setMessage('');
 
-    try {
-      const res = await fetch('/api/auth/forgot-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
+try {
+  const res = await fetch('/api/auth/forgot-password', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email }),
+  });
 
-      const data = await res.json();
+  const data = await res.json();
 
-      if (res.ok) {
-        setMessage(data.message || 'Reset link sent to your email.');
-      } else {
-        setMessage(data.message || 'Something went wrong.');
-      }
-    } catch (err) {
-      setMessage('Error sending request. Try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
+  if (res.ok) {
+    setMessage(data.message || 'Reset link sent to your email.');
+  } else {
+    console.error('Backend error:', data); // 🔍 Add this
+    setMessage(data.message || 'Something went wrong.');
+  }
+} catch (err) {
+  console.error('Network or parsing error:', err); // 🔍 Add this too
+  setMessage('Error sending request. Try again.');
+} finally {
+  setLoading(false);
+}
+  }; 
 
   return (
     <div className="min-h-screen flex items-center justify-center">

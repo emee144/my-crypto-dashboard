@@ -21,12 +21,9 @@ const signupSchema = z.object({
 });
 
 function getWalletIndexFromUUID(uuid) {
-  const hash = crypto.createHash('sha256').update(uuid).digest();
-  // Convert first 4 bytes to a 32-bit unsigned integer and take a safe modulo
-  const index = hash.readUInt32BE(0) % 1000000; // Max 999,999
-  return index;
+  const hash = crypto.createHash('sha256').update(uuid).digest('hex');
+  return parseInt(hash.slice(0, 8), 16); // First 8 chars → number
 }
-
 
 async function generateWallets(index = 0) {
   console.log("Master key:", MASTER_PRIVATE_KEY);
@@ -115,6 +112,8 @@ export async function POST(req) {
       exchange: 0.0,
       perpetual: 0.0,
       trade: 0.0,
+      assetType: 'USDT', // Default asset type
+      assetName: 'Tether USD',
     });
 
     // 🔐 Generate JWT and set cookie

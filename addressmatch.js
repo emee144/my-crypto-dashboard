@@ -11,7 +11,7 @@ const bip32 = BIP32Factory(ecc);
 // Inputs
 const xprv = 'xprv9s21ZrQH143K3XSZyxXdsBCPbB9fmA6aP86wyx3p2Q7gaUuoRC3x3EAF5j94stPMyQSt8vPcvCc9Z4AYDGCE9sPXpLwttWnyq2nHgEeDUWE';
 const xpub = 'xpub661MyMwAqRbcG1X35z4eEK989CzAAcpRkM2YnLTRajefTHEwxjNCb2Uivzacm8uE4pDn7vY6L22fekKHirSUkd7kSsYgQRd64YZRTXypM1U';
-const targetAddress = 'TCoeJh23hEW7yUnzKkLcfqKUBJb32qJCqX';
+const targetAddress = 'TFrzVic43HGHaRVejwMLJxk9kqvuBXUsqn';
 
 // Validate target address
 function isValidTronAddress(address) {
@@ -64,15 +64,16 @@ function deriveTronAddresses(node, maxAccounts, maxAddresses, isHardened) {
         } catch (error) {
           console.error(`Error deriving path ${path}:`, error.message);
         }
-      }
+      } 
+      
     }
   }
 }
 
 try {
   // Define the range of accounts and addresses to search
-  const maxAccounts = 1000; // Increased the number of accounts to search
-  const maxAddresses = 5000; // Increased the number of addresses per account
+  const maxAccounts = 100; // Increased the number of accounts to search
+  const maxAddresses = 200; // Increased the number of addresses per account
 
   console.log('🔑 Searching using xprv (hardened paths)...');
   const privateNode = bip32.fromBase58(xprv);
