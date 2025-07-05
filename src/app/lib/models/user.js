@@ -59,7 +59,11 @@ export default (sequelize) => {
       allowNull: false,
       unique: true,
     },
-    
+    isAdmin: {
+  type: DataTypes.BOOLEAN,
+  allowNull: false,
+  defaultValue: false,
+}
   }, {
     sequelize,
     modelName: 'User', // Capitalize the modelName here

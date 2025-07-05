@@ -66,6 +66,11 @@ const User = sequelize.define('User', { // Updated model name to 'User'
     type: DataTypes.STRING,
     allowNull: false,
   },
+  isAdmin: {
+  type: DataTypes.BOOLEAN,
+  allowNull: false,
+  defaultValue: false,
+}
 }, {
   timestamps: true,
   
@@ -443,4 +448,58 @@ const Order = sequelize.define('Order', {
   timestamps: true, // Enable default createdAt/updatedAt fields
 });
 Order.belongsTo(User, { foreignKey: 'userId', as: 'user' }); // Define association
-export { sequelize, User, Assets, Model, Order, WithdrawalPassword, WithdrawalHistory, DepositHistory, TransferHistory, WithdrawalAddress, WithdrawalRequest, connectDB };
+
+const Conversation = sequelize.define('Conversation', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'users',
+      key: 'id',
+    },
+  },
+}, {
+  timestamps: true,
+});
+
+const Message = sequelize.define('Message', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  conversationId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'conversations',
+      key: 'id',
+    },
+  },
+  senderId: {
+    type: DataTypes.UUID,
+    allowNull: true, // Null for admin messages
+    references: {
+      model: 'users',
+      key: 'id',
+    },
+  },
+  message: {
+    type: DataTypes.TEXT,
+    allowNull: false, // Message cannot be null
+  },
+  isAdmin: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false, // Default to false, meaning the message is from a user
+  },
+}, {
+  timestamps: true,
+});
+
+export { sequelize, User, Assets, Model, Order, WithdrawalPassword, WithdrawalHistory, DepositHistory, TransferHistory, WithdrawalAddress, WithdrawalRequest, Message, Conversation, connectDB };

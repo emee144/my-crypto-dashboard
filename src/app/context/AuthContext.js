@@ -3,28 +3,28 @@ import { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
 
-export function AuthProvider({ children }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(true); // ✅ move inside
+export function AuthProvider({ children, initialIsLoggedIn = false }) {
+  const [isLoggedIn, setIsLoggedIn] = useState(initialIsLoggedIn);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function checkAuth() {
+    const fetchUser = async () => {
       try {
         const res = await fetch("/api/auth/user");
         setIsLoggedIn(res.ok);
       } catch {
         setIsLoggedIn(false);
       } finally {
-        setLoading(false); // ✅ only render children when done
+        setLoading(false);
       }
-    }
+    };
 
-    checkAuth();
+    fetchUser();
   }, []);
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, loading }}>
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   );
 }

@@ -9,6 +9,7 @@ import {
   TransferHistory,
   WithdrawalAddress,
   WithdrawalRequest,
+  Conversation,
 } from '@/lib/sequelize.js';
 
 export function initModels() {
@@ -21,6 +22,7 @@ export function initModels() {
     TransferHistory,
     WithdrawalAddress,
     WithdrawalRequest,
+    Conversation,
   };
 
   // Call each model's associate method once, if it exists

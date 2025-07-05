@@ -52,7 +52,7 @@ const LoginPage = () => {
 
       const data = await response.json();
       if (response.ok) {
-        router.push("/dashboard");
+        window.location.href = "/dashboard"; // ✅ Not router.push
       } else {
         setError(data.message || "Something went wrong. Please try again.");
       }
