@@ -15,10 +15,10 @@ import {
 } from "lucide-react";
 
 export default function Navbar() {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, loading } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
-
+  const { setIsLoggedIn } = useAuth();
   const handleLogout = async () => {
     try {
       const res = await fetch("/api/auth/logout", { method: "POST" });
@@ -46,7 +46,7 @@ export default function Navbar() {
     { href: "/settings", label: "Settings", icon: <Settings size={18} /> },
     { href: "/trade", label: "Trade", icon: <TrendingUp size={18} /> },
   ];
-
+  if (loading) return null;
   return (
     <nav className="bg-blue-900 text-white p-4 shadow-lg">
       <div className="container mx-auto flex justify-between items-center">

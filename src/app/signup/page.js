@@ -85,8 +85,9 @@ const SignupPage = () => {
         setTronAddress(data.user.tronAddress)
 
         setTimeout(() => {
-          router.push('/login', { replace: true })
-        }, 3000)
+      window.location.href = "/dashboard"; // ✅ Forces full reload with correct auth state
+     }, 3000);
+
         
       } else {
         setError(data.message || 'An error occurred')

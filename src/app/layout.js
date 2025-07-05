@@ -1,10 +1,8 @@
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
 import { cookies } from 'next/headers';
-import { Toaster } from "react-hot-toast"
-import { AuthProvider } from './context/AuthContext';
+import ClientLayout from './ClientLayout'; // 👈 new client-side wrapper
+
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
@@ -21,21 +19,16 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const cookieStore = await cookies();
+  const cookieStore = cookies();
   const token = cookieStore.get('jwt')?.value;
-  const isLoggedIn = !!token;
-  console.log("JWT token:", token); // Make sure this shows a real value on logged-in pages
-console.log("🧠 layout.js – isLoggedIn:", isLoggedIn);
+  const isLoggedIn = !!token; // true/false
 
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="min-h-screen flex flex-col">
-        <AuthProvider initialIsLoggedIn={isLoggedIn}>
-        <Navbar />
-        <main className='flex-grow'>{children}</main>
-        <Footer /> {/* Let Footer handle its own logic */}
-        </AuthProvider>
-        <Toaster position="top-center" reverseOrder={false} />
+        <ClientLayout initialIsLoggedIn={isLoggedIn}>
+          {children}
+        </ClientLayout>
       </body>
     </html>
   );
