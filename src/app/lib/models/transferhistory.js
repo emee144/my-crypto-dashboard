@@ -1,6 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 
-export default (sequelize) => {
+const defineTransferHistoryModel = (sequelize) => {
   class TransferHistory extends Model {
     static associate(models) {
       TransferHistory.belongsTo(models.User, {
@@ -45,3 +45,4 @@ export default (sequelize) => {
 
   return TransferHistory;
 };
+export default defineTransferHistoryModel;

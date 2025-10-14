@@ -1,6 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 
-export default (sequelize) => {
+const defineWithdrawalPasswordModel = (sequelize) => {
   class WithdrawalPassword extends Model {  // Capitalize 'WithdrawalPassword'
     static associate(models) {
       WithdrawalPassword.belongsTo(models.User, {  // Capitalize 'User' here
@@ -34,3 +34,4 @@ export default (sequelize) => {
 
   return WithdrawalPassword;
 };
+export default defineWithdrawalPasswordModel;

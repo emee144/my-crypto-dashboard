@@ -1,7 +1,7 @@
 // /lib/models/message.js
 import { Model, DataTypes } from 'sequelize';
 
-export default (sequelize) => {
+const defineMessageModel = (sequelize) => {
   class Message extends Model {
     static associate(models) {
       // A message belongs to one conversation
@@ -57,3 +57,5 @@ export default (sequelize) => {
 
   return Message;
 };
+
+export default defineMessageModel;

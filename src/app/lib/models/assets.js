@@ -1,12 +1,11 @@
 import { DataTypes, Sequelize } from 'sequelize';
 
-export default (sequelize) => {
+const defineAssetsModel = (sequelize) => {
   class Assets extends Sequelize.Model {
     static associate(models) {
-      // Define associations here if needed
       Assets.belongsTo(models.User, {
         foreignKey: 'userId',
-        as: 'user', // Alias for the association
+        as: 'user',
       });
     }
   }
@@ -16,36 +15,35 @@ export default (sequelize) => {
       id: {
         type: DataTypes.UUID,
         primaryKey: true,
-        defaultValue: DataTypes.UUIDV4, // Automatically generate UUID
+        defaultValue: DataTypes.UUIDV4,
       },
       userId: {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-          model: 'Users', // Referencing the 'Users' table
-          key: 'id', // Referencing the 'id' column in the Users table
+          model: 'Users',
+          key: 'id',
         },
-        onDelete: 'CASCADE', // If the user is deleted, delete the related assets
+        onDelete: 'CASCADE',
       },
       exchange: {
         type: DataTypes.DECIMAL(10, 2),
-        defaultValue: 0.0, // Default value for exchange
+        defaultValue: 0.0,
         allowNull: false,
       },
       perpetual: {
         type: DataTypes.DECIMAL(10, 2),
-        defaultValue: 0.0, // Default value for perpetual
+        defaultValue: 0.0,
         allowNull: false,
       },
       trade: {
         type: DataTypes.DECIMAL(10, 2),
-        defaultValue: 0.0, // Default value for trade
+        defaultValue: 0.0,
         allowNull: false,
       },
-      
       assetType: {
-        type: DataTypes.STRING, // Define assetType column here
-        allowNull: false, // Set as required (or true if optional)
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       assetName: {
         type: DataTypes.STRING,
@@ -53,12 +51,14 @@ export default (sequelize) => {
       },
     },
     {
-      sequelize, // Pass the sequelize instance to the model
-      modelName: 'Assets', // Define the model name
-      tableName: 'assets', // Define the table name
-      timestamps: true, // Enable timestamps (createdAt, updatedAt)
+      sequelize,
+      modelName: 'Assets',
+      tableName: 'assets',
+      timestamps: true,
     }
   );
 
   return Assets;
 };
+
+export default defineAssetsModel;

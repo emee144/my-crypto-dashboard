@@ -1,6 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 
-export default (sequelize) => {
+const defineWithdrawalHistoryModel = (sequelize) => {
   class WithdrawalHistory extends Model {
     static associate(models) {
       WithdrawalHistory.belongsTo(models.User, {
@@ -50,3 +50,4 @@ export default (sequelize) => {
 
   return WithdrawalHistory;
 };
+export default defineWithdrawalHistoryModel;

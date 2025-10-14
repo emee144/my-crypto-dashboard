@@ -1,6 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 
-export default (sequelize) => {
+const defineDepositHistoryModel = (sequelize) => {
   class DepositHistory extends Model {
     static associate(models) {
       // Assuming DepositHistory belongs to User (adjust if necessary)
@@ -57,3 +57,5 @@ export default (sequelize) => {
 
   return DepositHistory;
 };
+
+export default defineDepositHistoryModel;

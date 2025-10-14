@@ -2,7 +2,7 @@
 
 import { Model, DataTypes } from 'sequelize';
 
-export default (sequelize) => {
+const defineBalanceModel = (sequelize) => {
   class Balance extends Model {
     static associate(models) {
       // Define associations between Balance, User, and Asset models
@@ -64,3 +64,5 @@ export default (sequelize) => {
 
   return Balance;
 };
+
+export default defineBalanceModel;

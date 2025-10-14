@@ -2,7 +2,7 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '@/app/lib/sequelize';
 
-export default (sequelize) => {
+const defineUserModel = (sequelize) => {
   class User extends Model {
     static associate(models) {
   User.hasMany(models.WithdrawalAddress, {
@@ -74,3 +74,4 @@ export default (sequelize) => {
 
   return User;
 };
+export default defineUserModel;
