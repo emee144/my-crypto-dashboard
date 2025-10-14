@@ -10,6 +10,7 @@ import {
   WithdrawalAddress,
   WithdrawalRequest,
   Conversation,
+  Message,
 } from '@/lib/sequelize.js';
 
 export function initModels() {
@@ -23,6 +24,7 @@ export function initModels() {
     WithdrawalAddress,
     WithdrawalRequest,
     Conversation,
+    Message,
   };
 
   // Call each model's associate method once, if it exists
@@ -31,6 +33,6 @@ export function initModels() {
       model.associate(models);
     }
   });
-
+ 
   return models;
 }

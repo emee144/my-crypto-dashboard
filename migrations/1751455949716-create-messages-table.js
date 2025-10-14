@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('messages', {
@@ -19,7 +20,7 @@ module.exports = {
       },
       senderId: {
         type: Sequelize.UUID,
-        allowNull: true, // null if message is from admin
+        allowNull: true,
         references: {
           model: 'users',
           key: 'id',

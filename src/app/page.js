@@ -42,7 +42,7 @@ const HomePage = () => {
 
         if (data?.user) {
           console.log("User is logged in:", data.user);
-          router.replace("/dashboard");
+          window.location.href = "/dashboard"; // ✅ Not router.push
         } else {
           console.log("User not logged in");
         }
@@ -103,7 +103,7 @@ const HomePage = () => {
       const data = await response.json();
 
       if (response.ok) {
-        router.push("/dashboard");
+        window.location.href = "/dashboard"; // ✅ Not router.push
       } else {
         setError(data.message || "Something went wrong. Please try again.");
       }
@@ -197,16 +197,17 @@ const HomePage = () => {
                     <div className="mb-4">
                       <label className="block text-gray-600">Email:</label>
                       <input
-                        type="email"
-                        placeholder="Enter your email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                        className="w-full p-3 mt-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
+  type="email"
+  placeholder="Enter your email"
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+  required
+  className="w-full p-3 mt-1 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-500"
+/>
+
                     </div>
                     <div className="mb-4">
-                      <label className="block text-gray-600">Password:</label>
+                      <label className="block text-gray-500">Password:</label>
                       <div className="relative">
                         <input
                           type={showPassword ? "text" : "password"}
@@ -214,7 +215,7 @@ const HomePage = () => {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           required
-                          className="w-full p-3 mt-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full p-3 mt-1 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-500"
                         />
                         <button
                           type="button"
@@ -245,7 +246,7 @@ const HomePage = () => {
                     {error && <p style={{ color: "red" }}>{error}</p>}
                     <button
                       type="submit"
-                      className="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition"
+                      className="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition cursor-pointer"
                       disabled={loading}
                     >
                       {loading ? "Logging in..." : "Login"}

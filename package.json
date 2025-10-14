@@ -2,6 +2,7 @@
   "name": "my-crypto-dashboard",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "cross-env NEXT_PRIVATE_TURBOPACK=true next dev",
     "build": "cross-env NEXT_PRIVATE_TURBOPACK=true next build",
@@ -33,6 +34,7 @@
     "mysql2": "^3.14.0",
     "next": "^15.3.0",
     "next-rate-limit": "^0.0.3",
+    "node-binance-api": "^1.0.11",
     "nodemailer": "^7.0.3",
     "qrcode.react": "^4.2.0",
     "react": "^18.3.1",

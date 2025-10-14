@@ -113,7 +113,7 @@ export async function POST(req) {
       perpetual: 0.0,
       trade: 0.0,
       assetType: 'USDT', // Default asset type
-      assetName: 'Tether USD',
+      assetName: 'USDT',
     });
 
     // 🔐 Generate JWT and set cookie
