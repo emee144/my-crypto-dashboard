@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -151,7 +151,15 @@ const HomePage = () => {
       <div className="flex flex-wrap gap-10 items-center justify-center w-full max-w-6xl mx-auto">
         {/* Logo Section */}
         <div className="text-center hover:scale-105 transition-transform w-full md:w-auto">
-          <img src="/assets/bitcoin.svg" alt="Bitcoin" className="w-80 h-80 mx-auto" />
+          <Image
+  src="/assets/bitcoin.svg"
+  alt="Bitcoin"
+  width={320}
+  height={320}
+  className="mx-auto w-80 h-80"
+  priority
+/>
+
           <p className="mt-2 font-medium text-gray-800 text-lg">Bitcoin</p>
         </div>
 

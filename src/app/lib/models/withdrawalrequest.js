@@ -1,6 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 
-export default (sequelize) => {
+const defineWithdrawalRequestModel = (sequelize) => {
   class WithdrawalRequest extends Model {
     static associate(models) {
       WithdrawalRequest.belongsTo(models.User, {  // Capitalize 'User' here
@@ -67,3 +67,4 @@ export default (sequelize) => {
 
   return WithdrawalRequest;
 };
+export default defineWithdrawalRequestModel;

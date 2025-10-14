@@ -1,6 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 
-export default (sequelize) => {
+const defineConversationModel = (sequelize) => {
   class Conversation extends Model {
     static associate(models) {
       // Each Conversation belongs to one User
@@ -39,3 +39,4 @@ export default (sequelize) => {
 
   return Conversation;
 };
+export default defineConversationModel;
