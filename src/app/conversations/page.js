@@ -12,7 +12,7 @@ export default function Conversations() {
 
   // Fetch conversations initially
   useEffect(() => {
-    async function fetchConversations() {
+        async function fetchConversations() {
       const response = await fetch('/api/auth/conversations?userId=userId'); // Pass the userId dynamically
       const data = await response.json();
       setConversations(data);

@@ -238,7 +238,7 @@ export default function WithdrawPage() {
 
             <button
               type="submit"
-              className="w-full py-3 bg-green-600 text-white rounded-xl text-lg font-semibold mb-10"
+              className="w-full py-3 bg-green-600 cursor-pointer text-white rounded-xl text-lg font-semibold mb-10"
               disabled={loading}
             >
               {loading ? 'Processing...' : 'Withdraw'}

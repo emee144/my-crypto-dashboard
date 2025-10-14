@@ -19,7 +19,7 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get('jwt')?.value;
   const isLoggedIn = !!token; // true/false
 

@@ -85,7 +85,7 @@ const SignupPage = () => {
         setTronAddress(data.user.tronAddress)
 
         setTimeout(() => {
-      window.location.href = "/dashboard"; // ✅ Forces full reload with correct auth state
+      window.location.href = "/dashboard"; 
      }, 3000);
 
         

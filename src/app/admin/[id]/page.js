@@ -1,25 +1,36 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';  // For accessing the dynamic route parameter
+import { useParams } from 'next/navigation'; // ✅ CORRECT import for App Router
 
 export default function ConversationDetails() {
   const [conversation, setConversation] = useState(null);
-  const router = useRouter();
-  const { id } = router.query;  // Get the dynamic 'id' from the URL
+  const params = useParams(); // ✅ useParams() gives an object with route params
+  const id = params.id; // ✅ extract `id`
 
-  useEffect(() => {
-    if (id) {
-      // Fetch the conversation details based on the ID
-      const fetchConversationDetails = async () => {
-        const response = await fetch(`/api/auth/conversations/${id}`);
-        const data = await response.json();
-        setConversation(data);
-      };
+ useEffect(() => {
+  if (id) {
+    const fetchConversationDetails = async () => {
+      try {
+        const res = await fetch(`/api/auth/conversations/${id}`);
+        console.log('Fetching from:', `/api/auth/conversations/${id}`);
 
-      fetchConversationDetails();
-    }
-  }, [id]);  // Re-run the effect whenever the 'id' changes
+        const data = await res.json();
+        console.log('Fetched conversation:', data);
+
+        if (res.ok) {
+          setConversation(data);
+        } else {
+          console.error('Failed to fetch:', data);
+        }
+      } catch (err) {
+        console.error('Fetch error:', err);
+      }
+    };
+
+    fetchConversationDetails();
+  }
+}, [id]);
 
   return (
     <div>

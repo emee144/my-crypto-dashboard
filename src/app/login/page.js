@@ -79,7 +79,7 @@ const LoginPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full p-3 mt-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 mt-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-500"
             />
           </div>
 
@@ -92,7 +92,7 @@ const LoginPage = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full p-3 mt-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 mt-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-500"
               />
               <button
                 type="button"
@@ -116,7 +116,7 @@ const LoginPage = () => {
               Remember Me
             </label>
           </div>
-             {/* 👉 Forgot Password link */}
+             {/*  Forgot Password link */}
     <div className="mb-4 text-right">
       <a href="/forgot-password" className="text-sm text-blue-600 hover:underline">
         Forgot Password?
@@ -124,7 +124,7 @@ const LoginPage = () => {
     </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition"
+            className="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition cursor-pointer"
             disabled={loading}
           >
             {loading ? "Logging in..." : "Login"}
