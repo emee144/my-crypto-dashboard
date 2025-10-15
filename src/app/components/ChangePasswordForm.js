@@ -67,78 +67,81 @@ const ChangePasswordForm = () => {
 
   return (
     <form onSubmit={handleChangePassword} className="space-y-4 max-w-md">
-      {/* Old Password */}
-      <div>
-        <label>Old Password</label>
-        <div className="flex items-center">
-          <input
-            type={showOld ? "text" : "password"}
-            value={oldPassword}
-            onChange={(e) => setOldPassword(e.target.value)}
-            className="w-full p-2 rounded text-black"
-            required
-          />
-          <button
-            type="button"
-            onClick={() => setShowOld(!showOld)}
-            className="ml-2 text-sm text-blue-500"
-          >
-            {showOld ? "Hide" : "Show"}
-          </button>
-        </div>
-        {errors.oldPassword && <p className="text-red-500 text-sm">{errors.oldPassword}</p>}
-      </div>
-
-      {/* New Password */}
-      <div>
-        <label>New Password</label>
-        <div className="flex items-center">
-          <input
-            type={showNew ? "text" : "password"}
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            className="w-full p-2 rounded text-black"
-            required
-          />
-          <button
-            type="button"
-            onClick={() => setShowNew(!showNew)}
-            className="ml-2 text-sm text-blue-500"
-          >
-            {showNew ? "Hide" : "Show"}
-          </button>
-        </div>
-        {errors.newPassword && <p className="text-red-500 text-sm">{errors.newPassword}</p>}
-      </div>
-
-      {/* Confirm Password */}
-      <div>
-        <label>Confirm Password</label>
-        <div className="flex items-center">
-          <input
-            type={showConfirm ? "text" : "password"}
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            className="w-full p-2 rounded text-black"
-            required
-          />
-          <button
-            type="button"
-            onClick={() => setShowConfirm(!showConfirm)}
-            className="ml-2 text-sm text-blue-500"
-          >
-            {showConfirm ? "Hide" : "Show"}
-          </button>
-        </div>
-        {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword}</p>}
-      </div>
-
-      <button type="submit" className="bg-blue-600 p-2 rounded text-white">
-        Change Password
+  {/* Old Password */}
+  <div>
+    <label className="block text-sm font-medium text-gray-200 mb-1">Old Password</label>
+    <div className="flex items-center">
+      <input
+        type={showOld ? "text" : "password"}
+        value={oldPassword}
+        onChange={(e) => setOldPassword(e.target.value)}
+        className="w-full p-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        required
+      />
+      <button
+        type="button"
+        onClick={() => setShowOld(!showOld)}
+        className="ml-2 text-sm text-blue-400 hover:text-blue-300"
+      >
+        {showOld ? "Hide" : "Show"}
       </button>
+    </div>
+    {errors.oldPassword && <p className="text-red-500 text-sm">{errors.oldPassword}</p>}
+  </div>
 
-      {message && <p className="text-sm mt-2">{message}</p>}
-    </form>
+  {/* New Password */}
+  <div>
+    <label className="block text-sm font-medium text-gray-200 mb-1">New Password</label>
+    <div className="flex items-center">
+      <input
+        type={showNew ? "text" : "password"}
+        value={newPassword}
+        onChange={(e) => setNewPassword(e.target.value)}
+        className="w-full p-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        required
+      />
+      <button
+        type="button"
+        onClick={() => setShowNew(!showNew)}
+        className="ml-2 text-sm text-blue-400 hover:text-blue-300"
+      >
+        {showNew ? "Hide" : "Show"}
+      </button>
+    </div>
+    {errors.newPassword && <p className="text-red-500 text-sm">{errors.newPassword}</p>}
+  </div>
+
+  {/* Confirm Password */}
+  <div>
+    <label className="block text-sm font-medium text-gray-200 mb-1">Confirm Password</label>
+    <div className="flex items-center">
+      <input
+        type={showConfirm ? "text" : "password"}
+        value={confirmPassword}
+        onChange={(e) => setConfirmPassword(e.target.value)}
+        className="w-full p-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        required
+      />
+      <button
+        type="button"
+        onClick={() => setShowConfirm(!showConfirm)}
+        className="ml-2 text-sm text-blue-400 hover:text-blue-300"
+      >
+        {showConfirm ? "Hide" : "Show"}
+      </button>
+    </div>
+    {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword}</p>}
+  </div>
+
+  <button
+    type="submit"
+    className="bg-blue-600 hover:bg-blue-700 transition p-2 rounded text-white w-full"
+  >
+    Change Password
+  </button>
+
+  {message && <p className="text-sm mt-2 text-gray-300">{message}</p>}
+</form>
   );
 };
 
