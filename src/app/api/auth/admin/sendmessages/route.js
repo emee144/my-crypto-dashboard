@@ -1,7 +1,8 @@
 import { getUserFromToken } from '@/lib/jwtUtils';
-import { Message } from '@/app/lib/models/message'; // ✅ direct import
-// import { sequelize } from '@/lib/sequelize'; // only if you need transactions
+import defineMessageModel from '@/app/lib/models/message';
+import { sequelize } from '@/app/lib/sequelize';
 
+const Message = defineMessageModel(sequelize);
 export async function POST(req) {
   console.log('📩 Incoming POST /api/auth/admin/sendmessages');
 
