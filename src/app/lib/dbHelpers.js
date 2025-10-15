@@ -1,5 +1,9 @@
-import { initModels } from '@/app/lib/models';
-const { Assets } = initModels();
+import defineAssetsModel from '@/app/lib/models/assets';
+import { sequelize } from '@/app/lib/sequelize';
+
+// Initialize the Assets model
+const Assets = defineAssetsModel(sequelize);
+
 
 export async function getUserTotalBalance(userId) {
   const assets = await Assets.findOne({ where: { userId } });
