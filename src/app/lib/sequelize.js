@@ -118,7 +118,11 @@ const Assets = sequelize.define('Assets', { // Updated model name to 'Assets'
   assetName: {
     type: DataTypes.STRING,
     allowNull: false,
-  },
+  }},
+{
+    tableName: 'assets',       // 👈 force lowercase
+  timestamps: true,
+  
 });
 Assets.belongsTo(User, { foreignKey: 'userId', as: 'user' }); // Define association
 
