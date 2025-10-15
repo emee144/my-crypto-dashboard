@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import { initModels } from '@/lib/models';
-const { User } = initModels();
+import { User } from '@/app/lib/models/user'; // ✅ direct import
 
 export async function POST(request) {
   try {

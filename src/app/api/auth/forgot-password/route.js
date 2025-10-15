@@ -1,9 +1,8 @@
 // app/api/auth/forgot-password/route.js
 import { NextResponse } from 'next/server';
-import { initModels } from '@/lib/models'
+import { User } from '@/app/lib/sequelize'; // ✅ import directly
 import { transporter } from '@/lib/mailer';
 import crypto from 'crypto';
-const { User } = initModels();
 export async function POST(request) {
   const { email } = await request.json();
 

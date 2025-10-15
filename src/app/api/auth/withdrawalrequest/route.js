@@ -1,11 +1,9 @@
 import { NextResponse } from 'next/server';
-import { initModels } from '@/app/lib/models';
 import { getUserFromCookies } from '@/app/lib/cookieUtils';
-import { sequelize } from '@/app/lib/sequelize';
-import { DataTypes } from 'sequelize';
-
-// Initialize models
-const { WithdrawalAddress, WithdrawalRequest, WithdrawalPassword, User } = initModels(sequelize, DataTypes);
+import { WithdrawalAddress } from '@/app/lib/models/withdrawaladdress';
+import { WithdrawalRequest } from '@/app/lib/models/withdrawalrequest';
+import { WithdrawalPassword } from '@/app/lib/models/withdrawalpassword';
+import { User } from '@/app/lib/models/user';
 
 export async function POST(req) {
   try {

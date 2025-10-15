@@ -1,8 +1,8 @@
-import { initModels } from '@/lib/models'; // Initialize models from your models directory
-import { sequelize } from '@/lib/sequelize'; // Your Sequelize instance
-import { getUserFromToken } from '@/lib/jwtUtils'; // JWT helper
-
-const { Conversation, Message } = initModels(sequelize); // ✅ Destructure initialized models
+import { Conversation } from '@/app/lib/models/conversation'; // path to your model file
+import { Message } from '@/app/lib/models/message'; 
+import { User } from '@/app/lib/models/user';
+import { getUserFromToken } from '@/lib/jwtUtils';
+import { sequelize } from '@/lib/sequelize'; // optional, if needed for transactions
 
 export async function GET(req) {
   try {
