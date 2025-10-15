@@ -1,8 +1,8 @@
-import { initModels } from '@/app/lib/models';
 import { NextResponse } from 'next/server';
 import { getUserFromCookies } from '@/app/lib/cookieUtils';
+import models from '@/app/lib/models';  // ✅ import all initialized models
 
-const { Assets } = initModels();
+const { User, Assets } = models;
 
 export async function GET(request) {
   try {

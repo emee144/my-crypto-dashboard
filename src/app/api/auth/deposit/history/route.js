@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server';
 import { getUserFromCookies } from '@/app/lib/cookieUtils';
-import { initModels } from '@/app/lib/models';
-const {DepositHistory, User} = initModels();
+import models from '@/app/lib/models';  // ✅ import all models
+
+const { DepositHistory, User } = models;
+
 
 export async function GET(req) {
   try {
