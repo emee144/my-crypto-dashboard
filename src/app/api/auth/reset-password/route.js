@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { sequelize } from '@/app/lib/sequelize';
 import defineUserModel from '@/app/lib/models/user'; // ✅ direct import
 const User = defineUserModel(sequelize);
 
@@ -17,7 +18,6 @@ export async function POST(request) {
       );
     }
 
-    // Replace with hashed password if not handled by Sequelize hook
     user.password = password;
     user.resetPasswordToken = null;
     user.resetPasswordExpires = null;
