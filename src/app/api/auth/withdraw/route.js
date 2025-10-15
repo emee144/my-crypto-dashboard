@@ -1,10 +1,27 @@
 import { NextResponse } from 'next/server';
 import { getUserFromCookies } from '@/app/lib/cookieUtils';
 import { sequelize } from '@/app/lib/sequelize';
-import models from '@/app/lib/models';  // ✅ import models
-const { User, DepositHistory } = models;
+import defineUserModel from '@/app/lib/models/user';
+import defineWithdrawalRequestModel from '@/app/lib/models/withdrawalrequest';
+import defineWithdrawalAddressModel from '@/app/lib/models/withdrawaladdress';
+import defineWithdrawalPasswordModel from '@/app/lib/models/withdrawalpassword';
+import defineAssetsModel from '@/app/lib/models/assets';
+import defineWithdrawalHistoryModel from '@/app/lib/models/withdrawalhistory';
 
-const { WithdrawalRequest, WithdrawalAddress, WithdrawalPassword, Assets, WithdrawalHistory } = initModels(sequelize);
+// 1️⃣ Initialize User first
+const User = defineUserModel(sequelize);
+
+// 2️⃣ Initialize models that need User for associations
+const WithdrawalAddress = defineWithdrawalAddressModel(sequelize, User);
+const WithdrawalRequest = defineWithdrawalRequestModel(sequelize, User);
+const WithdrawalPassword = defineWithdrawalPasswordModel(sequelize, User);
+const WithdrawalHistory = defineWithdrawalHistoryModel(sequelize, User);
+
+// 3️⃣ Models that don’t need associations
+const Assets = defineAssetsModel(sequelize);
+
+// ✅ Now all models are ready to use
+
 
 export async function POST(req) {
   try {
