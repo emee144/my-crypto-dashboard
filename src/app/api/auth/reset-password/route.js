@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { User } from '@/app/lib/models/user'; // ✅ direct import
+import defineUserModel from '@/app/lib/models/user'; // ✅ direct import
+const User = defineUserModel(sequelize);
 
 export async function POST(request) {
   try {

@@ -14,7 +14,7 @@ export async function GET() {
     }
 
     const assets = await Assets.findOne({
-      where: { userId: user.id }, // make sure it's user.id, not user.userId
+       where: { userId: user.userId }, // make sure it's user.id, not user.userId
     });
 
     if (!assets) {
