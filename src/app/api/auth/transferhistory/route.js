@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 import { sequelize } from '@/lib/sequelize';
-import { initModels } from '@/lib/models';
+import models from '@/lib/models';  // ✅ import all initialized models
 
-const { TransferHistory } = initModels(sequelize);
+const { User, WithdrawalHistory, Assets, TransferHistory } = models; // ✅ get models directly
 
 export async function GET() {
   try {

@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
-import { getUserFromCookie } from "@/app/lib/authHelpers"; // Ensure the correct path is used
-import { initModels } from "@/app/lib/models"; // Ensure models are initialized properly
-import { sequelize } from "@/app/lib/sequelize"; // Ensure sequelize instance is available
+import { getUserFromCookie } from "@/app/lib/authHelpers"; 
+import models from "@/app/lib/models";  // ✅ import all initialized models
 
-const { Assets } = initModels(sequelize); // Access the Assets model from initialized models
+const { Assets } = models; // Access the Assets model directly
 
 export async function GET(req) {
   const user = getUserFromCookie(req); // Ensure you pass `req` if required for cookies

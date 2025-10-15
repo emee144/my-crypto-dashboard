@@ -1,9 +1,7 @@
-// src/app/api/auth/deposit/route.js
+import models from '@/app/lib/models';
+import { getUserFromCookies } from '@/app/lib/cookieUtils';
 
-import models from '@/app/lib/models/init';  // <-- this initializes all models
-import { getUserFromCookies } from '@/app/lib/cookieUtils'; // Adjust path as needed
-
-const { User } = models;
+const { User, DepositHistory, Assets } = models;
 
 export async function GET(req) {
   try {

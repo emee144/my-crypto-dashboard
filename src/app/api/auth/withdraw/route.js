@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
-import { initModels } from '@/app/lib/models';
 import { getUserFromCookies } from '@/app/lib/cookieUtils';
 import { sequelize } from '@/app/lib/sequelize';
-import { Sequelize } from 'sequelize';
+import models from '@/app/lib/models';  // ✅ import models
+const { User, DepositHistory } = models;
 
 const { WithdrawalRequest, WithdrawalAddress, WithdrawalPassword, Assets, WithdrawalHistory } = initModels(sequelize);
 

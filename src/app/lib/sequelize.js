@@ -1,7 +1,6 @@
-// lib/sequelize.js
-import { Sequelize, DataTypes, Model } from 'sequelize';
+import { Sequelize, DataTypes } from 'sequelize';
 import dotenv from 'dotenv';
-import mysql2 from 'mysql2';  // Directly importing mysql2
+import mysql2 from 'mysql2';
 
 dotenv.config({ path: process.cwd() + '/.env.local' });
 
@@ -9,25 +8,32 @@ const {
   DB_NAME,
   DB_USER,
   DB_PASSWORD,
-  DB_HOST = 'localhost',
-  DB_PORT = 3306,
-  JWT_SECRET,
-  
+  DB_HOST,
+  DB_PORT,
   DB_DIALECT = 'mysql',
+  USE_SSL = 'true',
 } = process.env;
 
-if (!DB_NAME || !DB_USER || !DB_PASSWORD) {
+if (!DB_NAME || !DB_USER || !DB_PASSWORD || !DB_HOST) {
   console.error('❌ Missing essential database environment variables.');
   process.exit(1);
 }
 
-// Create Sequelize instance with specified dialect
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   host: DB_HOST,
+  port: Number(DB_PORT),
   dialect: DB_DIALECT,
   dialectModule: mysql2,
-  port: Number(DB_PORT),
   logging: console.log,
+  dialectOptions:
+    USE_SSL === 'true'
+      ? {
+          ssl: {
+            require: true,
+            rejectUnauthorized: false,
+          },
+        }
+      : {},
 });
 
 // ✅ User Model
@@ -72,6 +78,8 @@ const User = sequelize.define('User', { // Updated model name to 'User'
   defaultValue: false,
 }
 }, {
+    tableName: 'users',       // 👈 force lowercase
+  freezeTableName: true,    // 👈 stop Sequelize from pluralizing
   timestamps: true,
   
 });
@@ -499,7 +507,8 @@ const Message = sequelize.define('Message', {
     defaultValue: false, // Default to false, meaning the message is from a user
   },
 }, {
+  
   timestamps: true,
 });
 
-export { sequelize, User, Assets, Model, Order, WithdrawalPassword, WithdrawalHistory, DepositHistory, TransferHistory, WithdrawalAddress, WithdrawalRequest, Message, Conversation, connectDB };
+export { sequelize, User, Assets, Order, WithdrawalPassword, WithdrawalHistory, DepositHistory, TransferHistory, WithdrawalAddress, WithdrawalRequest, Message, Conversation, connectDB };

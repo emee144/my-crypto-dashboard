@@ -1,22 +1,20 @@
 import { NextResponse } from "next/server";
-import { getUserFromCookies } from "@/app/lib/cookieUtils"; // ✅ Correct import for cookieUtils.js
-import { Assets, connectDB } from "@/lib/sequelize"; // Assuming you have your sequelize models here
+import { getUserFromCookies } from "@/app/lib/cookieUtils";
+import { Assets, connectDB } from "@/lib/sequelize"; // ✅ keep using this
 
 export async function GET() {
   try {
-    await connectDB(); // Step 1: Connect to DB
+    await connectDB();
     console.log("✅ DB Connected");
 
-    // Get user from the cookies
     const user = await getUserFromCookies();
 
     if (!user) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    // Fetch assets for the authenticated user
     const assets = await Assets.findOne({
-      where: { userId: user.userId },
+      where: { userId: user.id }, // make sure it's user.id, not user.userId
     });
 
     if (!assets) {

@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
-import { initModels } from '@/app/lib/models';
 import { getUserFromCookies } from '@/app/lib/cookieUtils';
+import models from '@/app/lib/models';  // ✅ import all models
 
-const { WithdrawalHistory, User } = initModels();
+const { WithdrawalHistory, User } = models;
+
 
 // GET: Retrieve withdrawal history for the authenticated user
 export async function GET() {

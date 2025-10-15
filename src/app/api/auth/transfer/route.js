@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 import { sequelize } from '@/app/lib/sequelize';
-import { initModels } from '@/app/lib/models';
+import models from '@/app/lib/models';  // ✅ import all initialized models
 
-const { Assets, TransferHistory } = initModels(sequelize);
+const { Assets, TransferHistory } = models;  // Access the models directly
 
 export async function GET() {
   return NextResponse.json({ message: 'Use POST instead' }, { status: 405 });
