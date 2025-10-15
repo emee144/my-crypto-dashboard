@@ -1,6 +1,14 @@
 import { NextResponse } from 'next/server';
-import { WithdrawalPassword } from '@/app/lib/sequelize';
+import defineWithdrawalPasswordModel from '@/app/lib/models/withdrawalpassword';
+import { sequelize } from '@/app/lib/sequelize';
 import { getUserFromCookies } from '@/app/lib/cookieUtils';
+import defineUserModel from '@/app/lib/models/user';
+// Initialize User first (needed for associations)
+const User = defineUserModel(sequelize);
+
+// Initialize WithdrawalPassword
+const WithdrawalPassword = defineWithdrawalPasswordModel(sequelize, User);
+
 
 export async function POST(req) {
   try {
