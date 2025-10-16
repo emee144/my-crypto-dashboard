@@ -5,7 +5,7 @@ import { Assets, connectDB } from "@/lib/sequelize";
 export async function GET() {
   console.log("[GET /api/auth/assets] Request received");
   try {
-    console.log("🔌 Attempting DB connection...");
+    console.log(" Attempting DB connection...");
     await connectDB();
     console.log("Database connected successfully");
 
