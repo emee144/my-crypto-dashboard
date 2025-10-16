@@ -3,16 +3,14 @@ import defineConversationModel from '@/app/lib/models/conversation';
 import defineMessageModel from '@/app/lib/models/message';
 import defineUserModel from '@/app/lib/models/user';
 import { sequelize } from '@/lib/sequelize';
-// Initialize User first, because other models may reference it
-const User = defineUserModel(sequelize);
 
-// Initialize Conversation and Message models
+const User = defineUserModel(sequelize);
 const Conversation = defineConversationModel(sequelize, User);
 const Message = defineMessageModel(sequelize, User, Conversation);
 
 export async function GET(req) {
   try {
-    const user = getUserFromToken(); // This should work as long as jwtUtils uses `cookies()` correctly
+    const user = await getUserFromToken(req); // ✅ pass req
 
     if (!user || !user.isAdmin) {
       return new Response(JSON.stringify({ message: 'Access denied. Admin only.' }), {
@@ -25,15 +23,16 @@ export async function GET(req) {
         {
           model: Message,
           as: 'messages',
-          required: false,
+          separate: true,
+          order: [['createdAt', 'ASC']],
         },
-            {
-      model: User,
-      as: 'users',
-      attributes: ['id', 'email'], // limit what you send
-    },
+        {
+          model: User,
+          as: 'users',
+          attributes: ['id', 'email'],
+        },
       ],
-      order: [['createdAt', 'DESC']], // ✅ This orders conversations by their own createdAt
+      order: [['createdAt', 'DESC']],
     });
 
     return new Response(JSON.stringify(conversations), { status: 200 });
