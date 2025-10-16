@@ -12,8 +12,8 @@ export default function AssetsPage() {
     if (accountType === 'real') {
       const fetchAssets = async () => {
         try {
-          const res = await fetch("http://localhost:3000/api/auth/assets", {
-            cache: "no-store",
+          const res = await fetch("/api/auth/assets", {
+            cache: 'no-store',
           });
           const data = await res.json();
           setAssets(data);
