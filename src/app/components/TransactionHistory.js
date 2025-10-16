@@ -90,19 +90,19 @@ const TransactionHistory = () => {
               else Icon = ArrowUpCircle; // fallback
 
               const bgClass = isDeposit
-                ? "bg-blue-600"
+                ? "bg-green-800"
                 : isWithdrawal
                 ? "bg-green-600"
                 : isTransfer
-                ? "bg-red-600"
+                ? "bg-gray-700"
                 : "bg-gray-600";
 
               const borderClass = isDeposit
-                ? "border-blue-400"
+                ? "border-green-400"
                 : isWithdrawal
                 ? "border-green-400"
                 : isTransfer
-                ? "border-red-400"
+                ? "border-gray-400"
                 : "border-gray-400";
 
               const textClass = "text-white";
