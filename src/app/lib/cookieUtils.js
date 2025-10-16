@@ -5,12 +5,14 @@ import { cookies } from 'next/headers'; // Next.js dynamic API (async)
 export async function saveTokenToCookies(token, rememberMe = false) {
   const cookieStore = await cookies(); // 👈 await here
   const maxAge = rememberMe ? 60 * 60 * 24 * 365 : undefined;
-  await cookieStore.set('jwt', token, {
-    httpOnly: true,
-    secure: false,
-    path: '/',
-    maxAge,
-  });
+await cookieStore.set('jwt', token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production', // ✅ must be true on Vercel
+  path: '/',
+  sameSite: 'none', // ✅ needed for cross-site cookie support
+  maxAge,
+});
+
 }
 // Get the JWT token from cookies and decode it to get the user data
 export async function getUserFromCookies() {
