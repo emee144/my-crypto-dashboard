@@ -4,14 +4,14 @@ import { sequelize } from '@/app/lib/sequelize';
 
 const Message = defineMessageModel(sequelize);
 export async function POST(req) {
-  console.log('📩 Incoming POST /api/auth/admin/sendmessages');
+  console.log(' Incoming POST /api/auth/admin/sendmessages');
 
   try {
     const user = getUserFromToken(req); // ✅ pass req to read cookies
-    console.log('🔐 Decoded user:', user);
+    console.log(' Decoded user:', user);
 
     if (!user || !user.isAdmin) {
-      console.warn('🚫 Unauthorized access attempt by:', user);
+      console.warn('Unauthorized access attempt by:', user);
       return new Response(
         JSON.stringify({ message: 'Access denied. Admin only.' }),
         { status: 403 }
@@ -19,12 +19,12 @@ export async function POST(req) {
     }
 
     const body = await req.json();
-    console.log('📥 Request body:', body);
+    console.log(' Request body:', body);
 
     const { conversationId, message } = body;
 
     if (!conversationId || !message) {
-      console.warn('⚠️ Missing conversationId or message');
+      console.warn(' Missing conversationId or message');
       return new Response(
         JSON.stringify({ message: 'Missing conversationId or message' }),
         { status: 400 }
@@ -34,11 +34,11 @@ export async function POST(req) {
     const newMessage = await Message.create({
       conversationId,
       message,
-      senderId: user.userId, // ✅ Using user.userId based on your structure
+      senderId: user.userId, //  Using user.userId based on your structure
       isAdmin: true,
     });
 
-    console.log('✅ Message created:', newMessage);
+    console.log(' Message created:', newMessage);
 
     return new Response(JSON.stringify(newMessage), { status: 201 });
 
