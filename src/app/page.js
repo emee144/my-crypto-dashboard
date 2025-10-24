@@ -57,22 +57,19 @@ const HomePage = () => {
 useEffect(() => {
   try {
     const ref = searchParams.get("ref");
+
     if (ref && /^\d{8}$/.test(ref)) {
       localStorage.setItem("referrer", ref);
-      console.log("Referral saved:", ref);
-    }
-
-    if (!isLogin) {
+      setReferralCode(ref);
+    } else {
       const savedReferrer = localStorage.getItem("referrer");
-      if (savedReferrer) {
-        setReferralCode(savedReferrer);
-        console.log("Referral loaded:", savedReferrer);
-      }
+      setReferralCode(savedReferrer || "");
     }
   } catch (err) {
-    console.log("Referral code block error:", err);
+    // silently fail
   }
-}, [isLogin, searchParams]);
+}, [isLogin, searchParams?.toString()]); // ✅ stable dependency
+
 
   
 
