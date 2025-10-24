@@ -27,7 +27,7 @@ const Footer = () => {
           setError('Referral code not found.');
         }
       } catch (err) {
-        setError('Failed to fetch referral code.');
+        // silently fail, no referral code
       } finally {
         setLoading(false);
       }

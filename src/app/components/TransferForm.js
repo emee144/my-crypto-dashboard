@@ -121,7 +121,7 @@ export default function TransferForm() {
       <div className="space-y-4">
         {/* From */}
         <div>
-          <label className="block text-sm mb-1 flex items-center gap-2">
+          <label className="text-sm mb-1 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-green-500"></span>
             From
           </label>
@@ -139,7 +139,7 @@ export default function TransferForm() {
 
         {/* To */}
         <div>
-          <label className="block text-sm mb-1 flex items-center gap-2">
+          <label className="text-sm mb-1 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-red-500"></span>
             To
           </label>
