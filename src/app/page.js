@@ -54,23 +54,26 @@ const HomePage = () => {
     fetchUser();
   }, [router]);
   
-  useEffect(() => {
-    // Check for referral code in the URL
+useEffect(() => {
+  try {
     const ref = searchParams.get("ref");
     if (ref && /^\d{8}$/.test(ref)) {
       localStorage.setItem("referrer", ref);
+      console.log("Referral saved:", ref);
     }
-  
-    // Load referral code from localStorage when in sign-up mode
+
     if (!isLogin) {
       const savedReferrer = localStorage.getItem("referrer");
       if (savedReferrer) {
         setReferralCode(savedReferrer);
+        console.log("Referral loaded:", savedReferrer);
       }
     }
-  }, [isLogin, searchParams]);
-  
-  if (!mounted) return null;
+  } catch (err) {
+    console.log("Referral code block error:", err);
+  }
+}, [isLogin, searchParams]);
+
   
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
@@ -103,7 +106,7 @@ const HomePage = () => {
       const data = await response.json();
 
       if (response.ok) {
-        window.location.href = "/dashboard"; // ✅ Not router.push
+        window.location.href = "/dashboard"; 
       } else {
         setError(data.message || "Something went wrong. Please try again.");
       }
@@ -245,7 +248,7 @@ const HomePage = () => {
                       Remember Me
                       </label>
                     </div>
-                        {/* 👉 Forgot Password link */}
+                        {/* Forgot Password link */}
     <div className="mb-4 text-right">
       <a href="/forgot-password" className="text-sm text-blue-600 hover:underline">
         Forgot Password?

@@ -56,11 +56,11 @@ async function generateWallets(index = 0) {
 
 export async function POST(req) {
   await connectDB();
-  console.log('✅ DB Connected');
+  console.log('DB Connected');
 
   try {
     const body = await req.json();
-    console.log('📥 Request body:', body);
+    console.log('Request body:', body);
 
     const parsed = signupSchema.safeParse(body);
     if (!parsed.success) {
@@ -70,14 +70,12 @@ export async function POST(req) {
 
     const { email, password, referral } = parsed.data;
     const normalizedEmail = email.toLowerCase();
-
-    // 🔍 Check existing user
     const existingUser = await User.findOne({ where: { email: normalizedEmail } });
     if (existingUser) {
       return NextResponse.json({ message: 'User already exists' }, { status: 409 });
     }
 
-    // ✅ Validate referral code if provided
+    // Validate referral code if provided
     let uplineReferral = null;
     if (referral) {
       const referrer = await User.findOne({ where: { referralcode: referral } });
@@ -87,14 +85,14 @@ export async function POST(req) {
       uplineReferral = referrer.id;
     }
 
-    // 🆕 Generate UUID manually before creation
+    // Generate UUID manually before creation
     const userId = uuidv4();
 
-    // 🧠 Use UUID to derive deterministic wallet index
+    // Use UUID to derive deterministic wallet index
     const walletIndex = getWalletIndexFromUUID(userId);
     const { ethAddress, tronAddress } = await generateWallets(walletIndex);
 
-    // 🆕 Create user with full info
+    // Create user with full info
     const newReferralCode = generateReferralCode();
     const newUser = await User.create({
       id: userId,
@@ -106,7 +104,7 @@ export async function POST(req) {
       tronAddress,
     });
 
-    // 💰 Create empty assets
+    //  Create empty assets
     await Assets.create({
       userId: userId,
       exchange: 0.0,
@@ -116,7 +114,7 @@ export async function POST(req) {
       assetName: 'USDT',
     });
 
-    // 🔐 Generate JWT and set cookie
+    //  Generate JWT and set cookie
     const token = jwt.sign(
       { userId: newUser.id, email: newUser.email },
       JWT_SECRET,

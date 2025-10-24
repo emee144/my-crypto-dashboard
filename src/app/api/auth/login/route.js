@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { User, WithdrawalAddress, connectDB } from '../../../lib/sequelize';
-import { saveTokenToCookies } from '@/app/lib/cookieUtils'; // ✅ use our helper
+import { saveTokenToCookies } from '@/app/lib/cookieUtils'; 
 import jwt from 'jsonwebtoken';
 
 async function authenticateUser(normalizedEmail, password) {
@@ -31,7 +31,7 @@ export async function POST(req) {
       { expiresIn: '365d' }
     );
 
-    // ✅ Await saving token into cookies
+    // Await saving token into cookies
     await saveTokenToCookies(token, rememberMe); 
 
     return NextResponse.json({
