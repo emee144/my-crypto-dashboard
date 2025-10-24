@@ -27,36 +27,39 @@ export default function FuturesTrade() {
   }, []);
 
   return (
-    <div className="p-4">
+    <div className="flex flex-col gap-6 px-4 py-4 md:px-8 md:py-6">
+
       {/* TradingView Widget */}
-      <div className="mb-6 h-[400px] rounded overflow-hidden border">
+      <div className="w-full rounded overflow-hidden border mb-4 h-[300px] md:h-[400px]">
         <TradingViewWidget />
       </div>
 
-      <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+      {/* Live Price */}
+      <h2 className="text-lg md:text-xl font-semibold flex items-center gap-2">
         BTC/USDT:
         {price ? (
-          <span className="text-green-600">${price.toFixed(2)}</span>
+          <span className="text-green-500">${price.toFixed(2)}</span>
         ) : (
-          <span className="flex items-center gap-2 text-gray-500">
+          <span className="flex items-center gap-2 text-gray-400">
             <span className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-gray-400" />
-            Connecting to live feed...
+            Connecting...
           </span>
         )}
       </h2>
 
+      {/* Futures Balance */}
       <FuturesBalance balance={balance} />
 
-      {/* 🚀 Trade panel */}
+      {/* Trade Panel */}
       <TradePanel price={price} fetchBalanceAndTrades={fetchBalanceAndTrades} />
 
-      {/* 🧾 Open trades list */}
+      {/* Open Trades */}
       {trades.length > 0 && (
-        <div className="mt-6">
-          <h3 className="text-lg font-semibold mb-2">Open Trades</h3>
-          <div className="space-y-2">
+        <div>
+          <h3 className="text-md md:text-lg font-semibold mb-2">Open Trades</h3>
+          <div className="flex flex-col gap-2">
             {trades.map((t) => (
-              <div key={t.id} className="border rounded p-2 bg-white">
+              <div key={t.id} className="border rounded p-2 bg-white text-black">
                 <p><strong>Direction:</strong> {t.direction}</p>
                 <p><strong>Amount:</strong> {t.amount}</p>
                 <p><strong>Entry Price:</strong> {t.entryPrice}</p>
@@ -66,6 +69,9 @@ export default function FuturesTrade() {
           </div>
         </div>
       )}
+
+      {/* Extra bottom padding to avoid footer overlap */}
+      <div className="h-20 md:h-32"></div>
     </div>
   );
 }

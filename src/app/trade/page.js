@@ -43,7 +43,7 @@ export default function TradingPage() {
 
       {/* Display TradingView Chart if Spot is selected */}
       {selectedTradeType === 'spot' && (
-        <div className="w-full">
+        <div className="w-full mb-20">
           <TradingViewWidget />
         </div>
       )}
