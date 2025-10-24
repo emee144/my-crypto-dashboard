@@ -12,7 +12,6 @@ const DashboardPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // 🔐 Check if user is authenticated
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -35,7 +34,7 @@ const DashboardPage = () => {
     fetchUser();
   }, [router]);
 
-  // 🪙 Fetch crypto data
+  // Fetch crypto data
   const fetchCryptoData = async () => {
     try {
       const res = await fetch(
@@ -73,7 +72,7 @@ const DashboardPage = () => {
   return (
     <div className="bg-gray-900 min-h-screen p-4">
       <h1 className="text-xl sm:text-2xl font-bold text-white mb-4 text-center">
-        📊 Live Crypto Market
+        Live Crypto Market
       </h1>
 
       <div className="overflow-x-auto bg-gray-800 rounded-xl shadow-lg">
@@ -111,14 +110,14 @@ const DashboardPage = () => {
                 <td className="p-3 text-center">
                   {coin.price_change_percentage_24h > 0 && (
                     <span className="bg-green-600 text-xs sm:text-sm px-2 py-1 rounded-full">
-                      ✅ Gaining
+                      Gaining
                     </span>
                   )}
                 </td>
                 <td className="p-3 text-center">
                   {coin.price_change_percentage_24h < 0 && (
                     <span className="bg-red-600 text-xs sm:text-sm px-2 py-1 rounded-full">
-                      ❌ Losing
+                      Losing
                     </span>
                   )}
                 </td>

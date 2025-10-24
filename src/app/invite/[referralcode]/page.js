@@ -81,7 +81,7 @@ const ReferralPage = () => {
         </button>
       </div>
 
-      <div className="text-white mt-6 text-center">
+      <div className="text-white mt-6 text-center mb-20">
         <p>Share your referral code with others to invite them!</p>
       </div>
     </div>

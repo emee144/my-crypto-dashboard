@@ -20,6 +20,7 @@ export default function TradingPage() {
       <h1 className="text-3xl font-bold mb-4">Live Trading</h1>
 
       {/* Toggle between Spot and Futures */}
+      
       <div className="flex gap-4 mb-4">
         <button
           onClick={() => setSelectedTradeType('spot')}

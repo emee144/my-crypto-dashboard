@@ -1,5 +1,4 @@
 // components/FuturesDropdown.js
-
 import React, { useState } from 'react';
 import FuturesChart from './FuturesChart';
 const FuturesDropdown = ({ setSelectedOption }) => {

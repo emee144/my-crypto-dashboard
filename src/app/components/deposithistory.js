@@ -19,9 +19,7 @@ export default function DepositHistory() {
           credentials: 'include',
         });
 
-        if (!res.ok) {
-          throw new Error('Failed to fetch deposit history');
-        }
+        if (!res.ok) throw new Error('Failed to fetch deposit history');
 
         const data = await res.json();
         setDeposits(data.deposits || []);
@@ -44,17 +42,17 @@ export default function DepositHistory() {
     setFiltered(filteredData);
   }, [statusFilter, currencyFilter, deposits]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p className="text-red-500">{error}</p>;
+  if (loading) return <p className="text-sm">Loading...</p>;
+  if (error) return <p className="text-red-500 text-sm">{error}</p>;
 
   return (
-    <div className="mb-10 text-center bg-blue-900 text-white m-0 p-0">
-      <h2 className="text-2xl font-bold mb-4">Deposit History</h2>
+    <div className="mb-10 text-center bg-blue-900 text-white p-4">
+      <h2 className="text-xl font-bold mb-4">Deposit History</h2>
 
       {/* Filters */}
-      <div className="flex gap-4 mb-4">
+      <div className="flex flex-wrap justify-center gap-2 mb-4 text-sm">
         <select
-          className="border border-blue-500 text-white bg-blue-800 px-3 py-2 rounded"
+          className="border border-blue-500 bg-blue-800 text-white px-2 py-1 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
         >
@@ -65,7 +63,7 @@ export default function DepositHistory() {
         </select>
 
         <select
-          className="border border-blue-500 text-white bg-blue-800 px-3 py-2 rounded"
+          className="border border-blue-500 bg-blue-800 text-white px-2 py-1 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
           value={currencyFilter}
           onChange={(e) => setCurrencyFilter(e.target.value)}
         >
@@ -77,39 +75,43 @@ export default function DepositHistory() {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto m-0 p-0">
-        <table className="min-w-full border border-blue-500 text-sm bg-blue-800 rounded shadow m-0 p-0">
-          <thead>
-            <tr className="bg-blue-700">
-              <th className="p-3 border border-blue-600">Amount</th>
-              <th className="p-3 border border-blue-600">Chain</th>
-              <th className="p-3 border border-blue-600">Currency</th>
-              <th className="p-3 border border-blue-600">Status</th>
-              <th className="p-3 border border-blue-600">Date</th>
+      <div className="overflow-x-auto rounded-2xl border border-blue-500 shadow bg-blue-800">
+        <table className="min-w-full border-collapse text-sm">
+          <thead className="bg-blue-700">
+            <tr>
+              <th className="p-2 border border-blue-600">Amount</th>
+              <th className="p-2 border border-blue-600">Chain</th>
+              <th className="p-2 border border-blue-600">Currency</th>
+              <th className="p-2 border border-blue-600">Status</th>
+              <th className="p-2 border border-blue-600">Date</th>
             </tr>
           </thead>
           <tbody>
             {filtered.length > 0 ? (
               filtered.map((dep) => (
                 <tr key={dep.id} className="hover:bg-blue-600 transition">
-                  <td className="p-3 border text-white border-blue-700">{dep.depositAmount}</td>
-                  <td className="p-3 border text-white border-blue-700">{dep.chainName}</td>
-                  <td className="p-3 border text-white border-blue-700">{dep.currency}</td>
-                  <td className={`p-3 border border-blue-700 capitalize font-semibold ${
-                    dep.status === 'completed' ? 'text-green-400' :
-                    dep.status === 'pending' ? 'text-yellow-400' :
-                    'text-red-400'
-                  }`}>
+                  <td className="p-2 border border-blue-700">{dep.depositAmount}</td>
+                  <td className="p-2 border border-blue-700">{dep.chainName}</td>
+                  <td className="p-2 border border-blue-700">{dep.currency}</td>
+                  <td
+                    className={`p-2 border border-blue-700 capitalize font-semibold ${
+                      dep.status === 'completed'
+                        ? 'text-green-400'
+                        : dep.status === 'pending'
+                        ? 'text-yellow-400'
+                        : 'text-red-400'
+                    }`}
+                  >
                     {dep.status}
                   </td>
-                  <td className="p-3 border text-white border-blue-700">
+                  <td className="p-2 border border-blue-700">
                     {new Date(dep.depositDate).toLocaleString()}
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5" className="text-center p-4 text-gray-400">
+                <td colSpan="5" className="text-center p-2 text-gray-400">
                   No matching records found.
                 </td>
               </tr>
