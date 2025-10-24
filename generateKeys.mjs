@@ -3,7 +3,7 @@ import * as bip39 from 'bip39';
 import HDKey from 'hdkey';
 
 async function main() {
-  console.log('🚀 Starting key generation script...\n');
+  console.log('Starting key generation script...\n');
 
   // Generate a mnemonic
   const mnemonic = bip39.generateMnemonic();
