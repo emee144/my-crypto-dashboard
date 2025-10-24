@@ -85,7 +85,8 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <ul className="sm:hidden mt-4 flex gap-3 px-4 overflow-x-auto pb-2">
+        <ul className="sm:hidden mt-4 grid grid-cols-2 gap-3 px-4 pb-2">
+
           {menuItems.map(({ href, label, icon }) => (
             <li key={label} className="flex-shrink-0">
               <Link

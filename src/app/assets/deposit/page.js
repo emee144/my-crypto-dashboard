@@ -98,7 +98,7 @@ export default function DepositPage() {
         </div>
 
         {/* Troubleshooting Section */}
-        <div className="bg-red-500 p-4 rounded-lg text-white mt-6">
+        <div className="bg-red-500 p-4 rounded-lg text-white mt-6 mb-30">
           <h2 className="text-xl font-semibold mb-2">The recharge has not arrived?</h2>
           <p className="text-sm sm:text-base">
             If you encounter problems during the deposit process, you can contact ‘Online Customer Service’:
