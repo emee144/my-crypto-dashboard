@@ -14,7 +14,7 @@ export default function Spot() {
         new window.TradingView.widget({
           width: '100%',
           height: 500,
-          symbol: 'BINANCE:BTCUSDT', // Example: Bitcoin/USDT from Binance
+          symbol: 'BINANCE:BTCUSDT',  
           interval: '1',
           timezone: 'Etc/UTC',
           theme: 'dark',

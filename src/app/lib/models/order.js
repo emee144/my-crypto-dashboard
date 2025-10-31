@@ -1,4 +1,4 @@
-import { Model, DataTypes } from 'sequelize';
+import { Model, DataTypes, Sequelize } from 'sequelize';
 
 const defineOrderModel = (sequelize) => {
   class Order extends Model {
@@ -33,6 +33,15 @@ const defineOrderModel = (sequelize) => {
         type: DataTypes.FLOAT,
         allowNull: false,
       },
+      entryTime: {
+        type: Sequelize.DATE,
+        allowNull: false, // make it required
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+    },
+      exitPrice: {
+      type: Sequelize.FLOAT,
+      allowNull: true, // optional for open trades
+    },
       expiryTime: {
         type: DataTypes.DATE,
         allowNull: false,

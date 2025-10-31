@@ -111,6 +111,10 @@ const Assets = sequelize.define('Assets', { // Updated model name to 'Assets'
     type: DataTypes.DECIMAL(10, 2),
     defaultValue: 0.0,
   },
+  moneyInTrades: {
+    type: DataTypes.DECIMAL(20, 8),
+    defaultValue: 0.0,
+  },
   assetType: {
     type: DataTypes.STRING,  // Define assetType column here
     allowNull: false,        // Set as required (or true if optional)
@@ -410,6 +414,7 @@ const TransferHistory = sequelize.define('TransferHistory', {
 });
 TransferHistory.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
+
 const Order = sequelize.define('Order', {
   id: {
     type: DataTypes.UUID,
@@ -436,6 +441,15 @@ const Order = sequelize.define('Order', {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
+  entryTime: {
+    type: Sequelize.DATE,
+    allowNull: false, // make it required
+  defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+},
+  exitPrice: {
+  type: Sequelize.FLOAT,
+  allowNull: true, // optional for open trades
+},
   expiryTime: {
     type: DataTypes.DATE,
     allowNull: false,
@@ -460,6 +474,54 @@ const Order = sequelize.define('Order', {
   timestamps: true, // Enable default createdAt/updatedAt fields
 });
 Order.belongsTo(User, { foreignKey: 'userId', as: 'user' }); // Define association
+
+// ✅ Balance Model
+const Balance = sequelize.define('Balance', {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'User',
+      key: 'id',
+    },
+    onDelete: 'CASCADE',
+  },
+  assetId: {
+    type: DataTypes.UUID,
+    allowNull: true,
+    references: {
+      model: 'Assets',
+      key: 'id'
+    }
+  },
+  exchange: {
+    type: DataTypes.DECIMAL(20, 8),
+    defaultValue: 0,
+  },
+  trade: {
+    type: DataTypes.DECIMAL(20, 8),
+    defaultValue: 0,
+  },
+  perpetual: {
+    type: DataTypes.DECIMAL(20, 8),
+    defaultValue: 0,
+  },
+  moneyInTrades: {
+    type: DataTypes.DECIMAL(20, 8),
+    defaultValue: 0,
+  },
+}, {
+  tableName: 'balances',
+  timestamps: true,
+});
+
+Balance.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+
 
 const Conversation = sequelize.define('Conversation', {
   id: {
@@ -515,4 +577,4 @@ const Message = sequelize.define('Message', {
   timestamps: true,
 });
 
-export { sequelize, User, Assets, Order, WithdrawalPassword, WithdrawalHistory, DepositHistory, TransferHistory, WithdrawalAddress, WithdrawalRequest, Message, Conversation, connectDB };
+export { sequelize, User, Assets, Order, WithdrawalPassword, WithdrawalHistory, DepositHistory, TransferHistory, WithdrawalAddress, WithdrawalRequest, Balance, Message, Conversation, connectDB };

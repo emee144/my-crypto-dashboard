@@ -20,7 +20,7 @@ export async function POST(req) {
 
     const entryPrice = await getMarketPrice(asset);
     const now = new Date();
-    const exitTime = new Date(now.getTime() + duration * 1000);
+    const expiryTime = new Date(now.getTime() + duration * 1000);
 
     const trade = await Order.create({
       userId: userData.id,
@@ -30,7 +30,7 @@ export async function POST(req) {
       amount,
       duration,
       entryTime: now,
-      exitTime,
+      expiryTime,
       result: 'PENDING',
     });
 

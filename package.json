@@ -2,7 +2,6 @@
   "name": "nextrade",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev": "cross-env NEXT_PRIVATE_TURBOPACK=true next dev",
     "build": "cross-env NEXT_PRIVATE_TURBOPACK=true next build",

@@ -12,7 +12,7 @@ const defineBalanceModel = (sequelize) => {
       });
       Balance.belongsTo(models.Asset, {
         foreignKey: 'assetId',
-        as: 'asset',
+        as: 'assets',
       });
     }
   }
@@ -22,10 +22,20 @@ const defineBalanceModel = (sequelize) => {
       userId: {
         type: DataTypes.UUID,
         allowNull: false,
+          references: {
+    model: 'Users',
+    key: 'id',
+  },
+  onDelete: 'CASCADE',
       },
       assetId: {
         type: DataTypes.UUID,
         allowNull: false,
+          references: {
+    model: 'assets',
+    key: 'id',
+  },
+  onDelete: 'CASCADE',
       },
       exchange: {
         type: DataTypes.DECIMAL(20, 8),
@@ -40,6 +50,11 @@ const defineBalanceModel = (sequelize) => {
       perpetual: {
         type: DataTypes.DECIMAL(20, 8),
         allowNull: true,
+        defaultValue: 0,
+      },
+      moneyInTrades: {
+        type: DataTypes.DECIMAL(20, 8),
+        allowNull: false,
         defaultValue: 0,
       },
       createdAt: {

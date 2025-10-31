@@ -41,6 +41,11 @@ const defineAssetsModel = (sequelize) => {
         defaultValue: 0.0,
         allowNull: false,
       },
+      moneyInTrades: {
+        type: DataTypes.DECIMAL(20, 8),
+        defaultValue: 0.0,
+        allowNull: false,
+      },
       assetType: {
         type: DataTypes.STRING,
         allowNull: false,
