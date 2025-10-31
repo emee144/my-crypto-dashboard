@@ -66,12 +66,10 @@ useEffect(() => {
       setReferralCode(savedReferrer || "");
     }
   } catch (err) {
-    // silently fail
+    console.error("Error processing referral code:", err);
   }
-}, [isLogin, searchParams?.toString()]); // ✅ stable dependency
+}, [isLogin, searchParams.get("ref")]);
 
-
-  
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
   const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
