@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Futures from './futures/page.js';
 import Spot from './spot/page.js';
-import TradingViewWidget from '@/components/TradingViewWidget'; // ✅
+import TradingViewWidget from '@/components/TradingViewWidget'; 
 
 export default function TradingPage() {
   const [selectedTradeType, setSelectedTradeType] = useState('spot');
